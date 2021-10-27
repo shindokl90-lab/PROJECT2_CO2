@@ -18,6 +18,7 @@ create table CO2_dirty30(
 
 CREATE TABLE CO2_Values(
 	year bigint, 
+	total bigint,
 	country text,  
 	solid_fuel bigint, 
 	liquid_fuel bigint, 
@@ -31,8 +32,10 @@ CREATE TABLE CO2_Values(
 
 Insert into CO2_Countries(country) SELECT distinct "Country" from "CO2_Table_Raw";
 
-Insert into CO2_Values(year, country, solid_fuel, liquid_fuel, gas_fuel, cement, gas_flaring, per_capita) 
-SELECT "Year", "Country", "Solid Fuel", "Liquid Fuel", "Gas Fuel", "Cement", "Gas Flaring", "Per Capita" from "CO2_Table_Raw"; 
+Insert into CO2_Values(year, total, country, solid_fuel, liquid_fuel,
+					   gas_fuel, cement, gas_flaring, per_capita)
+					   
+SELECT "Year", "Total", "Country", "Solid Fuel", "Liquid Fuel", "Gas Fuel", "Cement", "Gas Flaring", "Per Capita" from "CO2_Table_Raw"; 
 
 insert into CO2_dirty30(country, total)
        select country,
@@ -41,6 +44,8 @@ insert into CO2_dirty30(country, total)
   group by country
   order by total desc
   limit 30;
+
+select * from CO2_dirty30 order by total desc;
 
 
 
