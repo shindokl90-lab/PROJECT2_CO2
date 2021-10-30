@@ -17,34 +17,36 @@ Base.prepare(engine, reflect=True)
 
 # Table references
 dirty30 = Base.classes.co2_dirty30
+countryvals = Base.classes.co2_values
 
 # Create route that renders index.html template
 @app.route("/")
 def home():
     return render_template('index.html')
 
-@app.route("/loadcharts")
-def load():
+@app.route("/loadall")
+def loadall():
     #Read data from database and pass it to template/js
     if request.method == 'GET':
-        countriestotal = []
+        countrytotals = []
         session = Session(engine)
-        countriestotal = session.query(dirty30.country, dirty30.total).all()
+        countrytotals = session.query(dirty30.country, dirty30.total).all()
         session.close()
-        return json.dumps([dict(r) for r in countriestotal])
+        return json.dumps([dict(r) for r in countrytotals])
 
-@app.route("/reloadcharts")
-def reload():
+
+@app.route("/loadsingle")
+def loadsingle():
     #Read data from database and pass it to template/js
     if request.method == 'GET':
-        countrytotal = []
-        r = request.get_json()
-        country = r["country"]
+        singlecountry = []
+        #r = request.get_json()
+        #country = r["country"]
+        country = "JAPAN"
         session = Session(engine)
-        countrytotal = session.query(dirty30.country, dirty30.total).filter(dirty30.country == country)
+        singlecountry = session.query(countryvals.year, countryvals.total, countryvals.country, countryvals.solid_fuel, countryvals.liquid_fuel, countryvals.gas_fuel, countryvals.cement, countryvals.gas_flaring, countryvals.per_capita).filter(countryvals.country == country)
         session.close()
-        return json.dumps([dict(r) for r in countrytotal])
-
+        return json.dumps([dict(r) for r in singlecountry])
 
 if __name__ == "__main__":
     app.run(debug=True)

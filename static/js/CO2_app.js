@@ -1,13 +1,13 @@
-function LoadCharts()
+function LoadAll()
 {
-    d3.json("/loadcharts").then(response => {
+    d3.json("/loadall").then(response => {
         console.log(countrytotals)
     })
 }
 
-function ReLoadCharts()
+function LoadOne()
 {
-    d3.json("/reloadcharts").then(response => {
-        console.log(countrytotal)
+    d3.json("/loadone").then(response => {
+        console.log(singlecountry)
     })
 }
