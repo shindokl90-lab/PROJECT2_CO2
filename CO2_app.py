@@ -1,28 +1,49 @@
 # imports
 from flask import Flask, jsonify, request, render_template, redirect
-
+import json
+import sqlalchemy
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, func, inspect
 # create instance of Flask app
 app = Flask(__name__)
 
 # Use flask to set up db connection
+engine = create_engine("postgresql://postgres:postgres@localhost/CO2")
 
-# Create route that renders index.html template and finds documents from mongo
+# reflect an existing database into a new model
+Base = automap_base()
+Base.prepare(engine, reflect=True)
+
+# Table references
+dirty30 = Base.classes.co2_dirty30
+
+# Create route that renders index.html template
 @app.route("/")
 def home():
-    example_embed='This string is from python'
-    return render_template('index.html', embed=example_embed)
+    return render_template('index.html')
 
-# Test route
-@app.route('/test', methods=['GET', 'POST'])
-def testfn():
-    # GET request
+@app.route("/loadcharts")
+def load():
+    #Read data from database and pass it to template/js
     if request.method == 'GET':
-        message = {'greeting':'Hello from Flask!'}
-        return jsonify(message)  # serialize and use JSON headers
-    # POST request
-    if request.method == 'POST':
-        print(request.get_json())  # parse as JSON
-        return 'Sucesss', 200
+        countriestotal = []
+        session = Session(engine)
+        countriestotal = session.query(dirty30.country, dirty30.total).all()
+        session.close()
+        return json.dumps([dict(r) for r in countriestotal])
+
+@app.route("/reloadcharts")
+def reload():
+    #Read data from database and pass it to template/js
+    if request.method == 'GET':
+        countrytotal = []
+        r = request.get_json()
+        country = r["country"]
+        session = Session(engine)
+        countrytotal = session.query(dirty30.country, dirty30.total).filter(dirty30.country == country)
+        session.close()
+        return json.dumps([dict(r) for r in countrytotal])
 
 
 if __name__ == "__main__":
