@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Co2 Emissions - Project 2</title> 
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Create two equal columns that floats next to each other */
+    .column {
+      float: left;
+      padding: 25px;
+      height: 650px; 
+    }
+    
+    .left {
+      width: 50%;
+    }
+    
+    .right {
+      width: 50%;
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    </style>
+
+</head>
+
+<body>
+
+<!-- navbar at the top -->
+<div class="topnav">
+    <a href="about.html">About This Project</a>
+    <a href="map.html">Top 30 CO2 Emitters Map</a>
+    <a class="active" href="index.html">Home</a>
+  </div> 
+
+<!--container class for image, etc. NOTE: text is not responsive-->
+<div class="container">
+  <div class="hero"><h1><b>CO2 EMISSIONS 1999 - 2014</b></h1>
+    <p>See the charts below and click on our other pages to learn more!</p>
+  </div> 
+
+<hr/>
+
+
+<div class="row">
+
+  <!--div to hold a linechart -->
+  <div class="column left" style="background-color:lightgray;">
+     <h1>Increasing CO2 Emissions by Year</h1>
+     <div id="linechart">
+     </div>
+    </div>
+
+ <!-- div to hold a stacked bar -->
+  <div class="column right" style="background-color:darkgray;">
+    <h1>CO2 Emissions by Country and Type</h1>  
+    <div id="insertStackedBar"> 
+    </div>
+  </div>
+</div>
+
+
+<hr/>
+<!--links to other data sites at the bottom of the page -->
+<div class="container center">
+    <br>
+    <h2>Links to additional CO2 data sources</h2> 
+
+<button class="button"><a href="https://www.wri.org/insights/interactive-chart-shows-changes-worlds-top-10-emitters" target="_blank" >Top 10 Countries by Emissions</a></button>
+<button class="button"><a href="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions" target="_blank" >Greenhouse Gas Emissions</a></button>
+<button class="button"><a href="https://eciu.net/netzerotracker" target="_blank" >Countries and Emission Reduction Activity</a></button>
+</div>
+
+
+  <!-- Chart script? -->
+  <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <!-- D3 JavaScript -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <!-- Plotly -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- API key -->
+  <script type="text/javascript" src="config.js"></script>
+  <!-- Our JavaScript -->
+  <script type="text/javascript" src="index2.js"></script>
+  <!-- <script src="app.js"></script> -->
+
+  
+</body>
+</html> 
+
+
